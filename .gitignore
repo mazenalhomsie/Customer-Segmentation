@@ -1,0 +1,5 @@
+
+#git add .gitignore
+#git commit -m "Update .gitignore to ignore specific folders"
+
+data/
