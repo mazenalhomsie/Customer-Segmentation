@@ -1,10 +1,14 @@
 import os
+from dotenv import load_dotenv
 from sqlalchemy import create_engine, inspect
 import pandas as pd
 
+load_dotenv()
+
 # Database connection string
-db_connection_str = 'postgresql://Test:bQNxVzJL4g6u@ep-noisy-flower-846766.us-east-2.aws.neon.tech/TravelTide'
-db_connection_str = db_connection_str.replace("postgres://", "postgresql://")
+db_connection_str = os.environ.get('DATABASE_URL')
+if db_connection_str and db_connection_str.startswith("postgres://"):
+    db_connection_str = db_connection_str.replace("postgres://", "postgresql://", 1)
 
 def fetch_data():
     try:

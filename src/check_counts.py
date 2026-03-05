@@ -1,7 +1,10 @@
+import os
 import pandas as pd
+from dotenv import load_dotenv
 from sqlalchemy import create_engine, inspect
 
-db_connection_str = 'postgresql://Test:bQNxVzJL4g6u@ep-noisy-flower-846766.us-east-2.aws.neon.tech/TravelTide'
+load_dotenv()
+db_connection_str = os.environ.get('DATABASE_URL')
 
 def get_row_counts():
     try:

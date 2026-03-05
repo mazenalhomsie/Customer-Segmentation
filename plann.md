@@ -20,7 +20,7 @@
 - [x] Am ende user_base.csv
 - [x] Überlegen wie wir weiter segmentieren (ML oder manuell)
 
-## Woche 3 🔄
+## Woche 3
 - [x] Entscheiden ob Clustering Ansatz oder manuell -> **Entscheidung: Machine Learning (K-Means Clustering)**
 - [ ] ~~Für manuell features entscheiden die einen Gutschein ausmachen~~ (Hinfällig, da ML Ansatz)
 - [x] Daten vorbereiten für PCA (Scaling & Dimensionality Reduction)

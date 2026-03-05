@@ -1,6 +1,11 @@
+import os
 import psycopg2
+from dotenv import load_dotenv
 
-db_connection_str = 'postgres://Test:bQNxVzJL4g6u@ep-noisy-flower-846766.us-east-2.aws.neon.tech/TravelTide'
+load_dotenv()
+db_connection_str = os.environ.get('DATABASE_URL')
+if db_connection_str and db_connection_str.startswith("postgresql://"):
+    db_connection_str = db_connection_str.replace("postgresql://", "postgres://", 1)
 
 def check_counts():
     try:
