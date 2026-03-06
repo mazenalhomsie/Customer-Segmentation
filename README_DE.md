@@ -128,10 +128,11 @@ Durch das Skript werden die bereinigten Datensätze `session_base.csv` und `not_
 
 ## Identifizierte Kundensegmente (K-Means Clustering)
 Das K-Means Clustering (`woche3_kmeans_clustering.py`) teilt die User nach 14 verhaltensbasierten und demografischen Features in diese Personas ein:
-1. **Cluster 0 (Vielreisende & Business-Traveller):** Älteste Gruppe (~45 Jahre) mit geringstem Kinderanteil. Buchen extrem spontan (Lead Time ~9 Tage), hohe Business-Trip Ratio (61%).
-2. **Cluster 1 (Window Shopper & Budget Explorer):** Fast nur auf der Website zum Schauen (Window Shopping: 84%). Niedrigste Ausgaben (Lifetime Value ~964$).
-3. **Cluster 2 (Frühbucher & Discount-Jäger):** Buchen >2 Monate (65 Tage) im Voraus. Höchste Storno-Quote (12%) und starke Reaktion auf Rabatte.
-4. **Cluster 3 (Familienurlauber):** Sehr häufig verheiratet und mit Kindern. Die längsten Aufenthalte (6,5 Nächte) und sehr hohe Family-Trip Ratio (40%).
+1. **Cluster 0 (Young Window Shopper):** Junge Singles (~32 Jahre), stöbern primär auf der Website (Window Shopping: 82%) mit niedrigsten Ausgaben (~$1230).
+2. **Cluster 1 (Frühbucher & Discount-Jäger):** Buchen >2 Monate (65 Tage) im Voraus. Höchste Storno-Quote (12%).
+3. **Cluster 2 (Familienurlauber):** Längste Aufenthalte (6,6 Nächte) und sehr hohe Family-Trip Ratio (52%).
+4. **Cluster 3 (Vielreisende & Business-Traveller):** Buchen spontan (Lead Time ~9 Tage), sehr hohe Business-Trip Ratio (58%). 
+5. **Cluster 4 (Ältere Verheiratete Urlauber):** Älteste Gruppe (~52 Jahre), fast alle verheiratet (93%), buchen spontan und mit moderatem Budget.
 
 ## Analyse starten
 Öffne `notebooks/01_Woche_1_Exploration_und_Preprocessing.ipynb`, um mit der ersten Analyse zu beginnen.

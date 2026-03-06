@@ -46,8 +46,8 @@ def run_clustering():
     X_scaled = scaler.fit_transform(X)
     
     # 2. K-Means Clustering anwenden
-    # Wir legen uns in diesem Skript auf k=4 fest (siehe Jupyter Notebook für die Evaluierung)
-    k = 4
+    # Wir legen uns in diesem Skript auf k=5 fest (siehe Jupyter Notebook für die Evaluierung)
+    k = 5
     print(f"Führe K-Means Clustering mit k={k} durch...")
     kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
     clusters = kmeans.fit_predict(X_scaled)
@@ -55,12 +55,12 @@ def run_clustering():
     # Cluster-Zuordnung an den originalen DataFrame hängen
     df['cluster'] = clusters
     
-    # 3. Perks basierend auf Elena Tarrants Liste zuweisen
     perk_mapping = {
-        0: 'free hotel meal',
-        1: 'exclusive discounts',
-        2: 'no cancellation fees',
-        3: '1 night free hotel with flight'
+        0: 'exclusive discounts',
+        1: 'no cancellation fees',
+        2: '1 night free hotel with flight',
+        3: 'free hotel meal',
+        4: 'free checked bag'
     }
     df['assigned_perk'] = df['cluster'].map(perk_mapping)
     
@@ -73,6 +73,7 @@ def run_clustering():
     print(f"[{len(df[df['cluster']==1])}] User in Cluster 1")
     print(f"[{len(df[df['cluster']==2])}] User in Cluster 2")
     print(f"[{len(df[df['cluster']==3])}] User in Cluster 3")
+    print(f"[{len(df[df['cluster']==4])}] User in Cluster 4")
     print(f"Daten gespeichert unter: {output_path}")
 
 if __name__ == "__main__":
