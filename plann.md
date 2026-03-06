@@ -30,11 +30,11 @@
 - [x] Am ende haben wir unsere Customer Segmentation, eine Zuweisung welcher Kunder (user_id) zu welchem Segment gehört und welchen Gutschein er/sie bekommt
 
 ## Woche 4
-- [ ] Report schreiben und finalisieren (Abstract und detaillierter Ablauf)
-- [ ] Präsentation vorbereiten
-- [ ] GitHub Repo erstellen und Code-Fragmente organisieren
-- [ ] Ordnerstruktur für das Projekt finalisieren und auf GitHub hochladen
-- [ ] ReadMe file schreiben (wie führe ich den Code aus? In welcher Reihenfolge?, mehr dazu in der Learning Journey)
+- [x] Report schreiben und finalisieren (Abstract und detaillierter Ablauf)
+- [x] Präsentation vorbereiten
+- [x] GitHub Repo erstellen und Code-Fragmente organisieren
+- [x] Ordnerstruktur für das Projekt finalisieren und auf GitHub hochladen
+- [x] ReadMe file schreiben
 - [ ] Vor der Präsentation das Projekt auf Codio abgeben
 - [ ] Präsentieren nur möglich wenn zuvor abgegeben wurde
 - [ ] Ende

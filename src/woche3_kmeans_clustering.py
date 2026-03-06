@@ -28,7 +28,10 @@ def run_clustering():
         'avg_nights_hotel',
         'avg_booking_lead_time',
         'business_trip_ratio', 
-        'family_trip_ratio'
+        'family_trip_ratio',
+        'age',
+        'is_married',
+        'has_kids'
     ]
     
     print(f"Verwendete Features: {features}")
@@ -52,7 +55,16 @@ def run_clustering():
     # Cluster-Zuordnung an den originalen DataFrame hängen
     df['cluster'] = clusters
     
-    # 3. Speichern der Ergebnisse
+    # 3. Perks basierend auf Elena Tarrants Liste zuweisen
+    perk_mapping = {
+        0: 'free hotel meal',
+        1: 'exclusive discounts',
+        2: 'no cancellation fees',
+        3: '1 night free hotel with flight'
+    }
+    df['assigned_perk'] = df['cluster'].map(perk_mapping)
+    
+    # 4. Speichern der Ergebnisse
     output_path = 'data/user_segments.csv'
     df.to_csv(output_path, index=False)
     

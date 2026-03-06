@@ -127,11 +127,11 @@ python src/woche1_preprocessing.py
 This script extracts the cleaned `session_base.csv` and `not_canceled_trips.csv` datasets to the `data/` folder.
 
 ## Identified Customer Segments (K-Means Clustering)
-The K-Means Clustering (`woche3_kmeans_clustering.py`) categorizes users into these personas based on 11 behavioral features:
-1. **Cluster 0 (Frequent & Business Travelers):** Book extremely spontaneously (Lead Time ~9 days), very high Business-Trip Ratio (61%).
-2. **Cluster 1 (Window Shopper & Budget Explorer):** Almost exclusively on the website to browse (Window Shopping: 84%). Lowest spending (Lifetime Value ~$990).
-3. **Cluster 2 (Family Vacationers):** Longest stays (6.5 nights) and very high Family-Trip Ratio (40%). 
-4. **Cluster 3 (Early Birds & Discount Seekers):** Book >2 months (65 days) in advance. Highest cancellation rate (12%) and strong response to discounts.
+The K-Means Clustering (`woche3_kmeans_clustering.py`) categorizes users into these personas based on 14 behavioral and demographic features:
+1. **Cluster 0 (Frequent & Business Travelers):** Oldest group (~45 years) with the fewest children. Book extremely spontaneously (Lead Time ~9 days), very high Business-Trip Ratio (61%).
+2. **Cluster 1 (Window Shopper & Budget Explorer):** Almost exclusively on the website to browse (Window Shopping: 84%). Lowest spending (Lifetime Value ~$964).
+3. **Cluster 2 (Early Birds & Discount Seekers):** Book >2 months (65 days) in advance. Highest cancellation rate (12%) and strong response to discounts.
+4. **Cluster 3 (Family Vacationers):** Very high marriage/children rate. Longest stays (6.5 nights) and very high Family-Trip Ratio (40%).
 
 ## Start Analysis
 Open `notebooks/01_Woche_1_Exploration_und_Preprocessing.ipynb` to start with the initial analysis.

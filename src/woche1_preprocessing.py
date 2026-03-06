@@ -10,7 +10,7 @@ db_connection_str = os.getenv('DATABASE_URL')
 if db_connection_str and db_connection_str.startswith("postgres://"):
     db_connection_str = db_connection_str.replace("postgres://", "postgresql://", 1)
 
-def run_preprocessing(sample_size=150000):
+def run_preprocessing(sample_size=15000000):
     try:
         engine = create_engine(db_connection_str)
         os.makedirs('data', exist_ok=True)
@@ -61,11 +61,19 @@ def run_preprocessing(sample_size=150000):
             h.rooms,
             h.check_in_time,
             h.check_out_time,
-            h.hotel_per_room_usd
+            h.hotel_per_room_usd,
+            u.birthdate,
+            u.gender,
+            u.married,
+            u.has_children,
+            u.home_country,
+            u.home_city,
+            u.home_airport
         FROM sessions s
         JOIN CohortUsers cu ON s.user_id = cu.user_id
         LEFT JOIN flights f ON s.trip_id = f.trip_id
         LEFT JOIN hotels h ON s.trip_id = h.trip_id
+        LEFT JOIN users u ON s.user_id = u.user_id
         LIMIT {sample_size};
         """
         
@@ -92,7 +100,9 @@ def run_preprocessing(sample_size=150000):
             'session_id', 'user_id', 'trip_id', 'session_start', 'session_end',
             'flight_discount', 'hotel_discount', 'flight_discount_amount', 
             'hotel_discount_amount', 'flight_booked', 'hotel_booked', 
-            'page_clicks', 'cancellation'
+            'page_clicks', 'cancellation',
+            'birthdate', 'gender', 'married', 'has_children',
+            'home_country', 'home_city', 'home_airport'
         ]
         session_base = df[session_base_cols].copy()
         session_path = 'data/session_base.csv'
@@ -134,7 +144,34 @@ def run_preprocessing(sample_size=150000):
             print(f"- Korrigiere {mask_0_seats.sum()} Flugbuchungen mit 0 Sitzen zu 1.")
             not_canceled.loc[mask_0_seats, 'seats'] = 1
 
+        # ---------------------------------------------------------------------
+        # 5. Qualitätskontrolle (Quality Control / QC)
+        # ---------------------------------------------------------------------
+        print("\n--- Führe Qualitätskontrolle (Quality Control / QC) durch ---")
+        qc_issues = 0
         
+        # QC 1: Gibt es noch negative Aufenthalte?
+        if (not_canceled['nights'] < 0).any():
+            print("❌ QC Fehler: Es existieren noch negative Nächte.")
+            qc_issues += 1
+            
+        # QC 2: Gibt es noch vertauschte Daten?
+        if (not_canceled['check_out_time'] < not_canceled['check_in_time']).any():
+            print("❌ QC Fehler: Check-Out liegt vor Check-In.")
+            qc_issues += 1
+        
+        # QC 3: Leere IDs?
+        if session_base['user_id'].isnull().any():
+            print("❌ QC Fehler: Sessions ohne zugewiesene User-ID gefunden.")
+            qc_issues += 1
+            
+        if qc_issues == 0:
+            print("✅ QC Bestanden: Die Datensätze weisen eine exzellente Qualität auf!")
+        else:
+            print(f"⚠️ QC Abgeschlossen: {qc_issues} grobe Fehler gefunden! GIGO-Prinzip verletzt.")
+        print("-------------------------------------------------------------")
+        
+
         not_canceled_path = 'data/not_canceled_trips.csv'
         not_canceled.to_csv(not_canceled_path, index=False)
         print(f"Gespeichert: {not_canceled_path} (Nur angetretene Reisen, {len(not_canceled)} Zeilen)")

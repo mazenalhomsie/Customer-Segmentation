@@ -36,13 +36,29 @@ def run_feature_engineering():
         window_shopping_sessions=('is_window_shopping', 'sum'),
         total_discount_sessions=('has_discount', 'sum'),
         total_page_clicks=('page_clicks', 'sum'),
-        avg_page_clicks=('page_clicks', 'mean')
+        avg_page_clicks=('page_clicks', 'mean'),
+        birthdate=('birthdate', 'first'),
+        gender=('gender', 'first'),
+        married=('married', 'first'),
+        has_children=('has_children', 'first')
     ).reset_index()
     
     # Ratios berechnen
     user_sessions['cancellation_rate'] = user_sessions['total_cancellations'] / user_sessions['total_sessions']
     user_sessions['window_shopping_rate'] = user_sessions['window_shopping_sessions'] / user_sessions['total_sessions']
     user_sessions['discount_affinity'] = user_sessions['total_discount_sessions'] / user_sessions['total_sessions']
+    
+    # Demografische Features konvertieren
+    reference_date = pd.to_datetime('2026-01-01') # Statisches Datum für das Projekt Alter
+    user_sessions['age'] = (reference_date - pd.to_datetime(user_sessions['birthdate'], errors='coerce')).dt.days // 365
+    user_sessions['is_married'] = user_sessions['married'].fillna(False).astype(int)
+    user_sessions['has_kids'] = user_sessions['has_children'].fillna(False).astype(int)
+    
+    # Füllen von NaN bei age mit dem Median
+    user_sessions['age'] = user_sessions['age'].fillna(user_sessions['age'].median())
+    
+    # Drop original demografische text Spalten
+    user_sessions.drop(columns=['birthdate', 'gender', 'married', 'has_children'], inplace=True)
     
     # ---------------------------------------------------------------------
     # 2. FEATURES AUS TRIPS ERSTELLEN (Nur für User mit angetretenen Reisen)
@@ -113,6 +129,20 @@ def run_feature_engineering():
     user_base['business_trip_ratio'] = np.where(user_base['total_trips'] > 0, user_base['total_business_trips'] / user_base['total_trips'], 0)
     user_base['family_trip_ratio'] = np.where(user_base['total_trips'] > 0, user_base['total_family_trips'] / user_base['total_trips'], 0)
     
+    # ---------------------------------------------------------------------
+    # 4. Qualitätskontrolle (Quality Control / QC)
+    # ---------------------------------------------------------------------
+    print("\n--- Führe Qualitätskontrolle (Missing Values) durch ---")
+    missing_final = user_base.isna().sum().sort_values(ascending=False).head(10)
+    print("Top-10 Missing-Spalten nach finaler Imputation:")
+    print(missing_final.to_string())
+    
+    if missing_final.sum() == 0:
+        print("✅ QC Bestanden: Datensatz ist 100% lückenlos! (Ideal für K-Means)")
+    else:
+        print("⚠️ QC Warnung: Es gibt noch fehlende Werte im Datensatz!")
+    print("-------------------------------------------------------")
+
     # Export
     output_path = 'data/user_base.csv'
     user_base.to_csv(output_path, index=False)
