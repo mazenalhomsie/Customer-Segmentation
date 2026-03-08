@@ -1,0 +1,40 @@
+# ---------------------------------------------------------------------
+# TravelTide Customer Segmentation - Zentrale Konfigurationsdatei
+# ---------------------------------------------------------------------
+
+# --- Woche 1: Daten-Vorverarbeitung & Kohorten-Filter ---
+preprocessing:
+  # Lade nur maximal so viele Datensätze (SQL Limit)
+  sample_size: 150000
+  
+  # Cohort Filtering: Ab wann und wie aktiv müssen Kunden sein?
+  cohort_start_date: '2023-01-04'
+  min_sessions: 7
+  
+  # Ausreißer-Behandlung (Interquartile Range Multiplikator)
+  iqr_multiplier: 1.5
+
+# --- Woche 3: Machine Learning (K-Means Clustering) ---
+clustering:
+  # Anzahl der Segmente (k)
+  n_clusters: 4
+  
+  # Reproduzierbarkeit (Seed)
+  random_state: 42
+  
+  # Hyperparameter
+  n_init: 10
+  
+  # Features, die der Algorithmus für die Distanzberechnung nutzen soll
+  features:
+    - total_sessions
+    - cancellation_rate
+    - window_shopping_rate
+    - discount_affinity
+    - avg_page_clicks
+    - total_trips
+    - total_spent
+    - avg_nights_hotel
+    - avg_booking_lead_time
+    - business_trip_ratio
+    - family_trip_ratio

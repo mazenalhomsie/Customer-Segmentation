@@ -1,0 +1,14 @@
+--- Durchschnittswerte pro Segment ---
+         total_sessions  cancellation_rate  window_shopping_rate  discount_affinity  avg_page_clicks  total_trips  total_spent  avg_nights_hotel  avg_booking_lead_time  business_trip_ratio  family_trip_ratio
+cluster                                                                                                                                                                                                        
+0                  8.47               0.00                  0.51               0.27            17.71         4.12      4130.65              3.28                   9.23                 0.61               0.11
+1                  8.32               0.00                  0.84               0.27            12.49         1.32       964.13              2.03                   8.29                 0.50               0.01
+2                  8.69               0.12                  0.52               0.37            20.57         3.16      4505.84              4.13                  64.91                 0.46               0.15
+3                  8.37               0.00                  0.73               0.28            13.76         2.22      4148.13              6.49                  16.89                 0.17               0.40
+
+--- Anzahl der Nutzer pro Cluster ---
+cluster
+0    2418
+1    1857
+2     618
+3    1105
