@@ -3,5 +3,5 @@
 #git commit -m "Update .gitignore to ignore specific folders"
 
 data/
-presentation/
+presentation/Data Analysis and Statistics.pptx
 .env
